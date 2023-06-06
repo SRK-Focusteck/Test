@@ -9,7 +9,7 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 12,
   },
-  plugins: ["only-warn"],
+  // plugins: ["only-warn"],
   rules: {
     // "no-console": "off",
     "no-console": "error",
