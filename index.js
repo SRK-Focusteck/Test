@@ -7,4 +7,9 @@ function greet(name) {
   if(1) console.log("its done")
 }
 
+function meet(){
+  console.log("I wana meet u");
+}
+
 greet("John");
+meet()

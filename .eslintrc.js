@@ -14,7 +14,7 @@ module.exports = {
     // "no-console": "off",
     "no-console": "error",
     "no-unused-vars": "warn",
-    // semi: ["error", "always"],
+    semi: ["error", "always"],
     quotes: ["error", "double"],
     // quotes: ["warn", "single"],
     // quotes: ["off", "single"],
