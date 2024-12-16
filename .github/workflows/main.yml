@@ -33,10 +33,11 @@ jobs:
         run: |
           echo "CLICKUP_API_KEY: $CLICKUP_API_KEY"
           if [ -n "$task_id" ]; then
-            curl -X POST "https://api.clickup.com/api/v2/task/$task_id/comment" \
-            -H "Authorization: $CLICKUP_API_KEY" \
-            -H "Content-Type: application/json" \
-            -d '{"comment": "This is an automated comment from the script."}'
+            echo "Found Task ID: $task_id"
+            # curl -X POST "https://api.clickup.com/api/v2/task/$task_id/comment" \
+            # -H "Authorization: $CLICKUP_API_KEY" \
+            # -H "Content-Type: application/json" \
+            # -d '{"comment": "This is an automated comment from the script."}'
           else
             echo "Task ID not found in the commit message."
           fi
