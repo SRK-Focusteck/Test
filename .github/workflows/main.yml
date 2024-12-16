@@ -23,12 +23,17 @@ jobs:
           commit_message_without_link=$(echo "$commits" | sed 's|https://app.clickup.com/t/[a-zA-Z0-9]*||g')
           echo "Commit message without the link: $commit_message_without_link"
           
+          # Get the branch name
+          branch_name=$(git rev-parse --abbrev-ref HEAD)
+          echo "Branch Name: $branch_name"
+          
           if [[ "$commits" =~ https://app.clickup.com/t/([a-zA-Z0-9]+) ]]; then
             task_id="${BASH_REMATCH[1]}"
             echo "Found Task ID: $task_id"
-            # Export task_id and commit_message_without_link to be used in subsequent steps
+            # Export task_id, commit_message_without_link, and branch_name to be used in subsequent steps
             echo "task_id=$task_id" >> $GITHUB_ENV
             echo "commit_message=$commit_message_without_link" >> $GITHUB_ENV
+            echo "branch_name=$branch_name" >> $GITHUB_ENV
           else
             echo "Task ID not found in the commit message."
           fi
@@ -41,11 +46,12 @@ jobs:
           if [ -n "$task_id" ]; then
             echo "Found Task ID: $task_id"
             echo "Commit Message: $commit_message"
-            # Send a POST request to ClickUp to create a comment with the commit message (without link)
+            echo "Branch Name: $branch_name"
+            # Send a POST request to ClickUp to create a comment with the commit message and branch name in bold
             curl -X POST "https://api.clickup.com/api/v2/task/$task_id/comment" \
             -H "Authorization: $CLICKUP_API_KEY" \
             -H "Content-Type: application/json" \
-            -d '{"comment_text": "'"$commit_message"'", "notify_all": true}'
+            -d '{"comment_text": "Commit on branch **'"$branch_name"'**: '"$commit_message"'", "notify_all": true}'
           else
             echo "Task ID not found in the commit message."
           fi
