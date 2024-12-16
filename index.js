@@ -9,3 +9,4 @@ function meet(){
 }
 
 greet("John");
+meet()
