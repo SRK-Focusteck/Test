@@ -1,0 +1,32 @@
+name: Add Commit Details to ClickUp
+
+on:
+  push: # Triggers the workflow on every push
+    branches: # Runs on all branches
+      - '**'
+
+jobs:
+  clickup-integration:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Parse Commit Messages
+        run: |
+          echo "Parsing commits for ClickUp links"
+          commits=$(git log -1 --pretty=format:"%s")
+          echo "Latest Commit: $commits"
+          if [[ "$commits" =~ https://app.clickup.com/t/([a-zA-Z0-9]+) ]]; then
+            task_id="${BASH_REMATCH[1]}"
+            echo "Found Task ID: $task_id"
+          fi
+
+      - name: Post to ClickUp
+        env:
+          CLICKUP_API_KEY: ${{ secrets.CLICKUP_API_KEY }}
+        run: |
+          curl -X POST https://api.clickup.com/api/v2/task/$task_id/comment \
+          -H "Authorization: $CLICKUP_API_KEY" \
+          -H "Content-Type: application/json" \
+          -d '{"comment": "Commit: '$commits'"}'
