@@ -31,7 +31,8 @@ jobs:
           fi
 
       - name: Show Test Result
-        run: echo "TEST_RESULT: $TEST_RESULT"
+        run: |
+         echo "TEST_RESULT: $TEST_RESULT"
 
       - name: Send Mattermost Notification on Failure
         if: env.TEST_RESULT == 'false'
