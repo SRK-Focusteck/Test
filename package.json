@@ -3,17 +3,21 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
-
-  "test": "mocha --recursive './src/**/*.test.js'",
-    "lint": "eslint ."
+    "test": "mocha --recursive './src/**/*.test.js'",
+    "acceptance-tests": "dotenv -e ./.tests/acceptance/.env mocha ./.tests/acceptance/**/*.test.js --timeout 10000"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "chai": "^5.2.0",
+    "dotenv-cli": "^8.0.0",
     "mocha": "^11.1.0"
+  },
+  "dependencies": {
+    "chai": "^4.5.0",
+    "chai-http": "^4.4.0",
+    "dotenv": "^16.4.7"
   }
 }

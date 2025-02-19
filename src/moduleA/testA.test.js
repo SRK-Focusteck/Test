@@ -1,4 +1,5 @@
-import { expect } from 'chai';
+const chai = require('chai');
+const { expect } = chai;
 
 describe('Module A Tests', function () {
     it('should return true', function () {

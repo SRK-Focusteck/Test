@@ -21,23 +21,44 @@ jobs:
       - name: Install Dependencies
         run: npm ci  # Installs exact dependencies
 
-      - name: Run Tests
+      - name: Run Unit Tests
         id: run_tests
         run: |
           if npm test; then
-            echo "TEST_RESULT=true" >> $GITHUB_ENV
+            echo "UNIT_TEST_RESULT=true" >> $GITHUB_ENV
           else
-            echo "TEST_RESULT=false" >> $GITHUB_ENV
+            echo "UNIT_TEST_RESULT=false" >> $GITHUB_ENV
           fi
 
-      - name: Show Test Result
+      - name: Show Unit Test Result
         run: |
-         echo "TEST_RESULT: $TEST_RESULT"
+          echo "UNIT_TEST_RESULT: $UNIT_TEST_RESULT"
 
-      - name: Send Mattermost Notification on Failure
-        if: env.TEST_RESULT == 'false'
+      - name: Send Mattermost Notification on Unit Test Failure
+        if: env.UNIT_TEST_RESULT == 'false'
         run: |
           curl -X POST -H 'Content-Type: application/json' \
           -d '{
-            "text": "⚠️ Test Failed in ci-cdBranch! Check the GitHub Actions logs for details."
+            "text": "⚠️ Unit Tests Failed in ci-cdBranch! Check the GitHub Actions logs for details."
+          }' https://9252-182-180-118-76.ngrok-free.app/hooks/icbthmpbw3gf5jzo8wnagu8r8o
+
+      - name: Run Acceptance Tests
+        id: acceptance_tests
+        run: |
+          if npm run acceptance-tests; then
+            echo "ACCEPTANCE_TEST_RESULT=true" >> $GITHUB_ENV
+          else
+            echo "ACCEPTANCE_TEST_RESULT=false" >> $GITHUB_ENV
+          fi
+
+      - name: Show Acceptance Test Result
+        run: |
+          echo "ACCEPTANCE_TEST_RESULT: $ACCEPTANCE_TEST_RESULT"
+
+      - name: Send Mattermost Notification on Acceptance Test Failure
+        if: env.ACCEPTANCE_TEST_RESULT == 'false'
+        run: |
+          curl -X POST -H 'Content-Type: application/json' \
+          -d '{
+            "text": "⚠️ Acceptance Tests Failed in ci-cdBranch! Check the GitHub Actions logs for details."
           }' https://9252-182-180-118-76.ngrok-free.app/hooks/icbthmpbw3gf5jzo8wnagu8r8o
