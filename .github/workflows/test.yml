@@ -1,0 +1,34 @@
+name: Run Tests on ci-cdBranch
+
+on:
+  push:
+    branches:
+      - ci-cdBranch  # ✅ Triggers only on push to this branch
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4  # ✅ Clones the repo
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18  # ✅ Set Node.js version
+
+      - name: Install Dependencies
+        run: npm ci  # ✅ Installs exact dependencies from package-lock.json
+
+      - name: Run Tests
+        id: run_tests
+        run: |
+          if npm test; then
+            echo "TEST_RESULT=true" >> $GITHUB_ENV
+          else
+            echo "TEST_RESULT=false" >> $GITHUB_ENV
+          fi
+
+      - name: Show Test Result
+        run: echo "Test Result: ${{ env.TEST_RESULT }}"  # ✅ Print test result
