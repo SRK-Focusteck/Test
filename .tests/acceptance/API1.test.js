@@ -27,6 +27,6 @@ describe('Acceptance Tests for API1 endpoint', () => {
         expect(apiResponse).to.have.status(200);
         expect(apiResponse.body).to.be.an('object');
         expect(apiResponse.body).to.have.property('message', 'Response from API 1');
-        expect(apiResponse.body).to.have.property('apiCode', 'API13');
+        expect(apiResponse.body).to.have.property('apiCode', 'API1');
     });
 });

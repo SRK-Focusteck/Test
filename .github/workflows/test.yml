@@ -42,6 +42,10 @@ jobs:
             "text": "⚠️ Unit Tests Failed in ci-cdBranch! Check the GitHub Actions logs for details."
           }' https://9252-182-180-118-76.ngrok-free.app/hooks/icbthmpbw3gf5jzo8wnagu8r8o
 
+      - name: Stop Workflow on Unit Test Failure
+        if: env.UNIT_TEST_RESULT == 'false'
+        run: exit 1
+      
       - name: Run Acceptance Tests
         id: acceptance_tests
         run: |
@@ -62,3 +66,8 @@ jobs:
           -d '{
             "text": "⚠️ Acceptance Tests Failed in ci-cdBranch! Check the GitHub Actions logs for details."
           }' https://9252-182-180-118-76.ngrok-free.app/hooks/icbthmpbw3gf5jzo8wnagu8r8o
+      
+      - name: Stop Workflow on Unit Test Failure
+        if: env.ACCEPTANCE_TEST_RESULT == 'false'
+        run: exit 1
+      
