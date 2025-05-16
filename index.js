@@ -17,6 +17,7 @@ function testFunction(){
 
 function helpMe (){
 const x =10
+const y =102
 }
 greet("John");
 meet()
