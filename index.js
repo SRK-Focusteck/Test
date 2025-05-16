@@ -19,6 +19,11 @@ function helpMe (){
 const x =10
 const y =102
 }
+
+function addNumbers(a, b) {
+  return a + b;
+}
+
 greet("John");
 meet()
 testFunction()
