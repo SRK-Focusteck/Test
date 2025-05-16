@@ -57,7 +57,7 @@ jobs:
             curl -X POST "https://api.clickup.com/api/v2/task/$task_id/comment" \
             -H "Authorization: $CLICKUP_API_KEY" \
             -H "Content-Type: application/json" \
-            -d '{"comment_text": "*Commit by '"$author_name"' on branch '"$branch_name"'* :: '"$commit_message"'", "notify_all": true}'
+            -d '{"comment_text": "👤 Commit by: '"$author_name"' \n🌿 Branch: '"$branch_name"' \n📝 Message: '"$commit_message"'", "notify_all": true}'
           else
             echo "Task ID not found in the commit message."
           fi
