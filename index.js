@@ -11,5 +11,9 @@ function meet(){
   console.log("I wana meet u");
 }
 
+function testFunction(){
+  console.log("I wana test u");
+}
 greet("John");
 meet()
+testFunction()
