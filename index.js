@@ -14,6 +14,10 @@ function meet(){
 function testFunction(){
   console.log("I wana test u");
 }
+
+function helpMe (){
+const x =10
+}
 greet("John");
 meet()
 testFunction()
